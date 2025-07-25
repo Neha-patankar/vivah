@@ -15,7 +15,7 @@ import ServicePages from "./components/Services/ServicePages";
 import RitualList from "./components/Vivahrasme/RitualList";
 import RitualDetails from "./components/Vivahrasme/RitualDetails";
 import ScrollToTop from "./components/ScrollToTop";
-import RasmePage from "./components/page/rasmePage";
+import RasmePage from "./components/page/RasmePage";
 import ServicesPage from "./components/page/ServicesPage";
 import RistePage from "./components/page/RistePage";
 
