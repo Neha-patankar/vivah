@@ -18,6 +18,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import RasmePage from "./components/page/RasmePage";
 import ServicesPage from "./components/page/ServicesPage";
 import RistePage from "./components/page/RistePage";
+import PrivacyPolicy from "./components/Privacy/PrivacyPolicy";
+import WeddingVendorDirectory from "./components/Vender/WeddingVendorDirectory";
 
 function App() {
   return (
@@ -44,9 +46,10 @@ function App() {
         <Route path="/rasme" element={<RitualList/>} />
         <Route path="/rituals/:id" element={<RitualDetails/>} />
         <Route path="/rasmepage" element={<RasmePage/>} />
-
         <Route path="/rishtey" element={<RistePage/>} />
-      
+        <Route path="/privacypolicy" element={<PrivacyPolicy/>} />
+        <Route path="/vender" element={<WeddingVendorDirectory/>} />
+        
      
       </Routes>
 

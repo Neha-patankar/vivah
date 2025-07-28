@@ -313,18 +313,19 @@ const VivahMahuratBanner = () => {
               backgroundRepeat: "no-repeat",
             }}
           >
+          <p className="text-red-600 font-bold">ॐ श्री गणेशाय नमः</p>
             {/* Ganesha Logo */}
             <img
               src="/Banner/ganesha.png"
               alt="Ganesha"
-              className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-4 mt-[-40px]"
+              className="w-20 h-20 sm:w-22 sm:h-22 md:w-28 md:h-28 mb-4 mt-[-10px]"
             />
-
+           
             {/* Typewriter Title */}
-            <h1 className="text-xl text-rose-600 sm:text-2xl md:text-3xl font-semibold tracking-wide mb-6 text-center drop-shadow-lg">
+            {/* <h1 className="text-xl text-rose-600 sm:text-2xl md:text-3xl font-semibold tracking-wide mb-6 text-center drop-shadow-lg">
               {displayText}
               <span className="border-r-2 border-white ml-1 animate-pulse" />
-            </h1>
+            </h1> */}
 
             {/* Decorative Circles */}
             <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -351,7 +352,12 @@ const VivahMahuratBanner = () => {
           <div className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 text-white py-4 px-4 text-center relative">
             {/* Decorative border */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400"></div>
-
+           
+            {/* Typewriter Title */}
+            <h1 className="text-xl text-white sm:text-2xl md:text-3xl font-semibold tracking-wide mb-6 text-center drop-shadow-lg">
+              {displayText}
+              <span className="border-r-2 border-white ml-1 animate-pulse" />
+            </h1>
            
             {/* Welcome Text */}
             <p className="text-sm sm:text-base md:text-lg font-bold text-white drop-shadow-md mb-5">

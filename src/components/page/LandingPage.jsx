@@ -7,6 +7,7 @@ import ServicePages from "../Services/ServicePages";
 import RitualList from "../Vivahrasme/RitualList";
 import Slider from "../LandingPage/Slider";
 import GroomBrideProfiles from "../LandingPage/GroomBrideProfiles";
+import WeddingVendorDirectory from "../Vender/WeddingVendorDirectory";
 
 
 
@@ -19,6 +20,7 @@ const LandingPage = () => {
       <CTASection />
       <SamajCards/>
       <ServicePages/>
+      <WeddingVendorDirectory/>
       <RitualList/>
       <GroomBrideProfiles/>
       <FeaturesSection />

@@ -112,9 +112,9 @@ const MatrimonialServicesSlider = () => {
   const IconComponent = currentSlideData.icon;
 
   return (
-    <div className="relative w-full h-96 overflow-hidden rounded-lg shadow-2xl">
+    <div className="relative w-full h-96 overflow-hidden rounded-lg shadow-2xl ">
       {/* Slider Container */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full ">
         {slides.map((slide, index) => (
           <div
             key={slide.id}
@@ -165,7 +165,7 @@ const MatrimonialServicesSlider = () => {
                   {slide.title}
                 </h1>
                 <p 
-                  className="text-lg sm:text-xl md:text-2xl mb-8 leading-relaxed opacity-95 max-w-3xl mx-auto"
+                  className="text-lg sm:text-xl md:text-2xl mb-8 leading-relaxed opacity-95 max-w-3xl mx-auto mb-10"
                   style={{
                     textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
                   }}
@@ -185,7 +185,7 @@ const MatrimonialServicesSlider = () => {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-300 group border border-white/30"
+          className="absolute left-4  md:left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-300 group border border-white/30"
         >
           <ChevronLeft className="h-6 w-6 md:h-8 md:w-8 text-white group-hover:scale-110 transition-transform" />
         </button>
@@ -194,7 +194,7 @@ const MatrimonialServicesSlider = () => {
           onClick={nextSlide}
           className="absolute right-4 md:right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-2 md:p-3 transition-all duration-300 group border border-white/30"
         >
-          <ChevronRight className="h-6 w-6 md:h-8 md:w-8 text-white group-hover:scale-110 transition-transform" />
+          <ChevronRight className="h-4 w-6 md:h-8 md:w-8 text-white group-hover:scale-110 transition-transform" />
         </button>
 
         {/* Slide Indicators */}
