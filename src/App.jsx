@@ -20,11 +20,15 @@ import ServicesPage from "./components/page/ServicesPage";
 import RistePage from "./components/page/RistePage";
 import PrivacyPolicy from "./components/Privacy/PrivacyPolicy";
 import WeddingVendorDirectory from "./components/Vender/WeddingVendorDirectory";
+import LoginForm from "./components/Registration/LoginForm";
+import VivahRegistrationForm from "./components/Registration/VivahRegistrationForm";
+import GetAllMembers from "./components/Admin/GetAllMembers";
+import RegistrationForm from "./components/Registration/RegistrationForm";
 
 function App() {
   return (
    <div>
-    <VivahMahuratBanner/>
+    {/* <VivahMahuratBanner/> */}
     
     <Router>
       <ScrollToTop/>
@@ -49,7 +53,12 @@ function App() {
         <Route path="/rishtey" element={<RistePage/>} />
         <Route path="/privacypolicy" element={<PrivacyPolicy/>} />
         <Route path="/vender" element={<WeddingVendorDirectory/>} />
+        <Route path="/vivahregistration" element={<VivahRegistrationForm/>} />
+        <Route path="/registration" element={<RegistrationForm/>} />
         
+        <Route path="/login" element={<LoginForm/>} />
+        <Route path="/allmembers" element={<GetAllMembers/>} />
+     
      
       </Routes>
 

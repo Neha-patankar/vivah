@@ -42,16 +42,10 @@ const AboutUs = () => {
             />
           </h2>
 
-          <p className="text-white text-lg mb-6 leading-relaxed">
-            <strong>Ready Matrimonial</strong> is one of the most professional and experienced matrimonial website development companies in India. With a passionate and skilled team, we specialize in:
+          <p className="font-bold text-lg text-white">
+            विवाह मुहूर्त – एक ही मंच पर रिश्ते से विदाई तक की सभी सेवाएं। अब 26+ समाज और 50000+ प्रोफाइल्स में से अपने परिजनों के लिए रिश्ता खोजें। हमारी सेवाओं में है – Vivah Assist, जहाँ हमारा असिस्टेंट आपके लिए रिश्ता ढूंढेगा और मीटिंग भी अरेंज करेगा।
+            Vendor Directory के ज़रिए आप कैटरिंग, डेकोरेशन और 30+ केटेगरी के वेन्डर्स से डायरेक्ट बुकिंग कर सकते हैं।
           </p>
-
-          <ul className="list-disc list-inside space-y-2 text-white text-base font-medium">
-            <li>Fully detailed and verified profiles</li>
-            <li>Multiple and easy contact options</li>
-            <li>Smart automatic matchmaking system</li>
-            <li>User-friendly and modern navigation</li>
-          </ul>
         </div>
       </div>
     </section>
