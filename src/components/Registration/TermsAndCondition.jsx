@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
-import { X, FileText, Shield, AlertTriangle, Users, Camera, CreditCard, MapPin, Flag, Copyright, Phone } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  X,
+  FileText,
+  Shield,
+  AlertTriangle,
+  Users,
+  Camera,
+  CreditCard,
+  MapPin,
+  Flag,
+  Copyright,
+  Phone,
+} from "lucide-react";
 
 const TermsAndConditionsPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,74 +22,86 @@ const TermsAndConditionsPage = () => {
       id: 1,
       icon: <Users className="w-5 h-5" />,
       title: "Free Registration",
-      content: "Free signup is free registration for all users but some features may be paid as specified."
+      content:
+        "Free signup is free registration for all users but some features may be paid as specified.",
     },
     {
       id: 2,
       icon: <Shield className="w-5 h-5" />,
       title: "Data Responsibility",
-      content: "All the details submitted by you is your own responsibility, the site vivahmahurat.com will show the details to any visitor or other users (registered and authorized) for matching purpose."
+      content:
+        "All the details submitted by you is your own responsibility, the site vivahmahurat.com will show the details to any visitor or other users (registered and authorized) for matching purpose.",
     },
     {
       id: 3,
       icon: <CreditCard className="w-5 h-5" />,
       title: "Free & Paid Features",
-      content: "Only registration, mobile app and data view is free, but there may be features which may be chargeable."
+      content:
+        "Only registration, mobile app and data view is free, but there may be features which may be chargeable.",
     },
     {
       id: 4,
       icon: <Copyright className="w-5 h-5" />,
       title: "Copyright Responsibility",
-      content: "All the details, photos, videos or any other information submitted, updated, provided by user or you hold no responsibility of vivahmahurat for any copyright laws violation if the data or other material submitted is found to be copied or violation of any copyright laws, we are a common matrimony profile matching platform and do not hold any responsibility of the images, details, information or videos as provided by the registrar."
+      content:
+        "All the details, photos, videos or any other information submitted, updated, provided by user or you hold no responsibility of vivahmahurat for any copyright laws violation if the data or other material submitted is found to be copied or violation of any copyright laws, we are a common matrimony profile matching platform and do not hold any responsibility of the images, details, information or videos as provided by the registrar.",
     },
     {
       id: 5,
       icon: <AlertTriangle className="w-5 h-5" />,
       title: "Profile Verification",
-      content: "It is advisable to all registered users to kindly cross check, authenticate, verify the details, Rishta before finalizing the profile or Rishta, vivahmahurat.com will not be responsible for any activity or details displayed as they are provided by other users."
+      content:
+        "It is advisable to all registered users to kindly cross check, authenticate, verify the details, Rishta before finalizing the profile or Rishta, vivahmahurat.com will not be responsible for any activity or details displayed as they are provided by other users.",
     },
     {
       id: 6,
       icon: <Shield className="w-5 h-5" />,
       title: "Profile Management",
-      content: "All the profiles as registered are verified time to time and updated, activated, blocked or may be removed as may after the confirmation or as per the decision of vivahmahurat.com authorities, staff or management as per the policies of the site."
+      content:
+        "All the profiles as registered are verified time to time and updated, activated, blocked or may be removed as may after the confirmation or as per the decision of vivahmahurat.com authorities, staff or management as per the policies of the site.",
     },
     {
       id: 7,
       icon: <Users className="w-5 h-5" />,
       title: "Vendor Responsibility",
-      content: "All the vendor categories, vendor details, prices and profile details are provided and finalized by vendors registered on the website and users are advised to kindly cross check and confirm the policies of the selected vendors, if found any mis consumption and reported to the site, the vendor may be blacklisted or removed from the platform."
+      content:
+        "All the vendor categories, vendor details, prices and profile details are provided and finalized by vendors registered on the website and users are advised to kindly cross check and confirm the policies of the selected vendors, if found any mis consumption and reported to the site, the vendor may be blacklisted or removed from the platform.",
     },
     {
       id: 8,
       icon: <CreditCard className="w-5 h-5" />,
       title: "Service Fee Changes",
-      content: "The service, subscription, recharge fee for users, vendors, advertisers are subject to change, modify, updated or may be if removed with out any prior notice or intimation to any users, and may be done as per the decisions and policies or decision of the vivahmahurat authorities."
+      content:
+        "The service, subscription, recharge fee for users, vendors, advertisers are subject to change, modify, updated or may be if removed with out any prior notice or intimation to any users, and may be done as per the decisions and policies or decision of the vivahmahurat authorities.",
     },
     {
       id: 9,
       icon: <MapPin className="w-5 h-5" />,
       title: "Jurisdiction",
-      content: "All subjects and matters are subjected to Indore jurisdiction only."
+      content:
+        "All subjects and matters are subjected to Indore jurisdiction only.",
     },
     {
       id: 10,
       icon: <Flag className="w-5 h-5" />,
       title: "Reporting System",
-      content: "The user can directly report any candidate, vendor, advertiser profile anytime to vivahmahurat if found any mislead, information, media, photo or video, vivahmahurat will identify the issue, will verify and if found ok, the profile will be removed immediately and legal action can be taken if required."
+      content:
+        "The user can directly report any candidate, vendor, advertiser profile anytime to vivahmahurat if found any mislead, information, media, photo or video, vivahmahurat will identify the issue, will verify and if found ok, the profile will be removed immediately and legal action can be taken if required.",
     },
     {
       id: 11,
       icon: <Copyright className="w-5 h-5" />,
       title: "Intellectual Property",
-      content: "No design, concept, data, name or logo can be reused or recreated and cannot be copied without prior written permission or mutual order in written by vivahmahurat to the use, if found legal action may be taken against the user."
+      content:
+        "No design, concept, data, name or logo can be reused or recreated and cannot be copied without prior written permission or mutual order in written by vivahmahurat to the use, if found legal action may be taken against the user.",
     },
     {
       id: 12,
       icon: <Phone className="w-5 h-5" />,
       title: "Vendor Services",
-      content: "All the vendor services, images, prices, contact details are managed and provided directly by vendor himself and we hold no responsibility for any profile displayed until, unless as reported by any user with proof to vivahmahurat.com along with written complaint."
-    }
+      content:
+        "All the vendor services, images, prices, contact details are managed and provided directly by vendor himself and we hold no responsibility for any profile displayed until, unless as reported by any user with proof to vivahmahurat.com along with written complaint.",
+    },
   ];
 
   const TermsModal = () => (
@@ -95,7 +119,9 @@ const TermsAndConditionsPage = () => {
             <FileText className="w-8 h-8 mr-3" />
             <div>
               <h1 className="text-2xl font-bold">Terms and Conditions</h1>
-              <p className="text-pink-100 mt-1">Vivah Mahurat - नियम और शर्तें</p>
+              <p className="text-pink-100 mt-1">
+                Vivah Mahurat - नियम और शर्तें
+              </p>
             </div>
           </div>
         </div>
@@ -104,21 +130,25 @@ const TermsAndConditionsPage = () => {
         <div className="overflow-y-auto max-h-[60vh] p-6">
           <div className="mb-6 p-4 bg-pink-50 border-l-4 border-pink-500 rounded-r-lg">
             <p className="text-gray-700 leading-relaxed">
-              <span className="font-semibold text-pink-700">
-                By clicking on the agree button, you agree and accept all the terms and conditions of Vivah Mahurat usage:
+              <span className="font-bold text-pink-700">
+                By clicking on the agree button, you agree and accept all the
+                terms and conditions of Vivah Mahurat usage:
               </span>
             </p>
           </div>
 
           <div className="space-y-4">
             {termsData.map((term) => (
-              <div key={term.id} className="bg-white border border-pink-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+              <div
+                key={term.id}
+                className="bg-white border border-pink-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+              >
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 bg-pink-100 text-pink-600 p-2 rounded-lg">
                     {term.icon}
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-gray-800 mb-2 flex items-center">
+                    <h3 className="font-bold text-gray-800 mb-2 flex items-center">
                       <span className="bg-pink-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-2">
                         {term.id}
                       </span>
@@ -138,9 +168,14 @@ const TermsAndConditionsPage = () => {
             <div className="flex items-start">
               <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" />
               <div>
-                <h4 className="font-semibold text-red-800 mb-1">Important Notice</h4>
+                <h4 className="font-bold text-red-800 mb-1">
+                  Important Notice
+                </h4>
                 <p className="text-red-700 text-sm">
-                  Please read all terms and conditions carefully before agreeing. By accepting these terms, you acknowledge that you have read, understood, and agree to be bound by these conditions.
+                  Please read all terms and conditions carefully before
+                  agreeing. By accepting these terms, you acknowledge that you
+                  have read, understood, and agree to be bound by these
+                  conditions.
                 </p>
               </div>
             </div>
@@ -158,7 +193,10 @@ const TermsAndConditionsPage = () => {
                 onChange={(e) => setIsAgreed(e.target.checked)}
                 className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
               />
-              <label htmlFor="agreeTerms" className="ml-2 text-sm text-gray-700">
+              <label
+                htmlFor="agreeTerms"
+                className="ml-2 text-sm text-gray-700"
+              >
                 I have read and agree to the Terms and Conditions
               </label>
             </div>
@@ -174,14 +212,14 @@ const TermsAndConditionsPage = () => {
                   if (isAgreed) {
                     setIsOpen(false);
                     // Handle agreement logic here
-                    alert('Terms and Conditions accepted!');
+                    alert("Terms and Conditions accepted!");
                   }
                 }}
                 disabled={!isAgreed}
-                className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                className={`px-6 py-2 rounded-lg font-bold transition-colors ${
                   isAgreed
-                    ? 'bg-pink-500 text-white hover:bg-pink-600'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    ? "bg-pink-500 text-white hover:bg-pink-600"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
                 }`}
               >
                 Accept & Continue
@@ -194,30 +232,11 @@ const TermsAndConditionsPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className=" ">
+      <div className="max-w-6xl mx-auto">
         {/* Demo Registration Form Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Registration Form</h2>
+        <div className=" rounded-xl shadow-lg p-6 mb-8">
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="First Name"
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-              />
-            </div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-            />
-            
             {/* Terms and Conditions Checkbox */}
             <div className="flex items-start space-x-3 p-4 bg-pink-50 border border-pink-200 rounded-lg">
               <input
@@ -227,49 +246,21 @@ const TermsAndConditionsPage = () => {
                 className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded mt-1 cursor-pointer"
               />
               <div className="flex-1">
-                <label htmlFor="terms" className="text-sm text-gray-700 cursor-pointer" onClick={() => setIsOpen(true)}>
-                  I agree to the{' '}
-                  <span className="text-pink-600 hover:text-pink-700 underline font-semibold">
+                <label
+                  htmlFor="terms"
+                  className="text-sm text-gray-700 cursor-pointer"
+                  onClick={() => setIsOpen(true)}
+                >
+                  I agree to the{" "}
+                  <span className="text-pink-600 hover:text-pink-700 underline font-bold">
                     Terms and Conditions
-                  </span>
-                  {' '}and{' '}
+                  </span>{" "}
+                  and{" "}
                   <span className="text-pink-600 hover:text-pink-700 underline">
                     Privacy Policy
                   </span>
                 </label>
               </div>
-            </div>
-
-            <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-lg font-semibold hover:from-purple-700 hover:to-pink-700 transition-colors">
-              Register Now
-            </button>
-          </div>
-        </div>
-
-        {/* Information Section */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">About Terms and Conditions</h3>
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Click on the "Terms and Conditions" link above to view the complete terms and conditions for Vivah Mahurat. 
-            The modal will open with all 12 detailed clauses covering registration, data responsibility, payments, 
-            intellectual property, and legal jurisdiction.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="text-center p-4 bg-pink-50 rounded-lg">
-              <FileText className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-              <h4 className="font-semibold text-gray-800">12 Clauses</h4>
-              <p className="text-sm text-gray-600">Comprehensive terms coverage</p>
-            </div>
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <Shield className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-              <h4 className="font-semibold text-gray-800">Legal Protection</h4>
-              <p className="text-sm text-gray-600">User and platform safety</p>
-            </div>
-            <div className="text-center p-4 bg-pink-50 rounded-lg">
-              <MapPin className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-              <h4 className="font-semibold text-gray-800">Indore Jurisdiction</h4>
-              <p className="text-sm text-gray-600">Legal matters coverage</p>
             </div>
           </div>
         </div>

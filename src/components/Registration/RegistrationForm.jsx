@@ -20,6 +20,7 @@ import { samajData } from "./samajAndGotraData";
 import TermsAndConditionsPage from "./TermsAndCondition";
 
 const RegistrationForm = () => {
+  
   const [form, setForm] = useState({
     // Basic Details
     name: "",
@@ -1100,116 +1101,118 @@ const RegistrationForm = () => {
                 />
               </div>
             </div>
+            {/* Vehicle & Home Status Wrapper */}
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Vehicle Details Section */}
+              <div className="mt-6 p-4 shadow-inner flex-1">
+                <h4 className="font-semibold text-lg mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-2 text-pink-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                    <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
+                  </svg>
+                  Vehicle Details / वाहन विवरण
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white p-3 rounded-lg border border-pink-200">
+                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                      <input
+                        type="checkbox"
+                        name="twoWheeler"
+                        checked={form.twoWheeler === "Yes"}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            twoWheeler: e.target.checked ? "Yes" : "No",
+                          })
+                        }
+                        className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
+                      />
+                      <span className="ml-3 text-gray-700 font-medium">
+                        🏍️ Two Wheeler / 2 पहिया वाहन
+                      </span>
+                    </label>
+                  </div>
 
-            {/* Vehicle Details Section */}
-            <div className="mt-6 p-4 shadow-inner ">
-              <h4 className="font-semibold text-lg mb-4 text-gray-800 flex items-center">
-                <svg
-                  className="w-5 h-5 mr-2 text-pink-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                  <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0H10a1 1 0 001-1V5a1 1 0 00-1-1H3zM14 7a1 1 0 00-1 1v6.05A2.5 2.5 0 0115.95 16H17a1 1 0 001-1V8a1 1 0 00-1-1h-3z" />
-                </svg>
-                Vehicle Details / वाहन विवरण
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white p-3 rounded-lg border border-pink-200">
-                  <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
-                    <input
-                      type="checkbox"
-                      name="twoWheeler"
-                      checked={form.twoWheeler === "Yes"}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          twoWheeler: e.target.checked ? "Yes" : "No",
-                        })
-                      }
-                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                    />
-                    <span className="ml-3 text-gray-700 font-medium">
-                      🏍️ Two Wheeler / 2 पहिया वाहन
-                    </span>
-                  </label>
-                </div>
-
-                <div className="bg-white p-3 rounded-lg border border-pink-200">
-                  <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
-                    <input
-                      type="checkbox"
-                      name="fourWheeler"
-                      checked={form.fourWheeler === "Yes"}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          fourWheeler: e.target.checked ? "Yes" : "No",
-                        })
-                      }
-                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
-                    />
-                    <span className="ml-3 text-gray-700 font-medium">
-                      🚗 Four Wheeler / 4 पहिया वाहन
-                    </span>
-                  </label>
+                  <div className="bg-white p-3 rounded-lg border border-pink-200">
+                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                      <input
+                        type="checkbox"
+                        name="fourWheeler"
+                        checked={form.fourWheeler === "Yes"}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            fourWheeler: e.target.checked ? "Yes" : "No",
+                          })
+                        }
+                        className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
+                      />
+                      <span className="ml-3 text-gray-700 font-medium">
+                        🚗 Four Wheeler / 4 पहिया वाहन
+                      </span>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Home Status Section */}
-            <div className="mt-2  p-4 shadow-inner ">
-              <h4 className="font-semibold text-lg mb-4 text-gray-800 flex items-center">
-                <svg
-                  className="w-5 h-5 mr-2 text-pink-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
-                Home Status / मकान विवरण
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white p-3 rounded-lg border border-pink-200">
-                  <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
-                    <input
-                      type="radio"
-                      name="homeStatus"
-                      value="Rented"
-                      checked={form.homeStatus === "Rented"}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          homeStatus: e.target.value,
-                        })
-                      }
-                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span className="ml-3 text-gray-700 font-medium">
-                      🏠 Rented / किराये का
-                    </span>
-                  </label>
-                </div>
+              {/* Home Status Section */}
+              <div className="mt-6 p-4 shadow-inner flex-1">
+                <h4 className="font-bold text-lg mb-4 text-gray-800 flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-2 text-pink-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                  Home Status / मकान विवरण
+                </h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white p-3 rounded-lg border border-pink-200">
+                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                      <input
+                        type="radio"
+                        name="homeStatus"
+                        value="Rented"
+                        checked={form.homeStatus === "Rented"}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            homeStatus: e.target.value,
+                          })
+                        }
+                        className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
+                      />
+                      <span className="ml-3 text-gray-700 font-medium">
+                        🏠 Rented / किराये का
+                      </span>
+                    </label>
+                  </div>
 
-                <div className="bg-white p-3 rounded-lg border border-pink-200">
-                  <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
-                    <input
-                      type="radio"
-                      name="homeStatus"
-                      value="Self"
-                      checked={form.homeStatus === "Self"}
-                      onChange={(e) =>
-                        setForm({
-                          ...form,
-                          homeStatus: e.target.value,
-                        })
-                      }
-                      className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
-                    />
-                    <span className="ml-3 text-gray-700 font-medium">
-                      🏡 Self Owned / स्वयं का
-                    </span>
-                  </label>
+                  <div className="bg-white p-3 rounded-lg border border-pink-200">
+                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                      <input
+                        type="radio"
+                        name="homeStatus"
+                        value="Self"
+                        checked={form.homeStatus === "Self"}
+                        onChange={(e) =>
+                          setForm({
+                            ...form,
+                            homeStatus: e.target.value,
+                          })
+                        }
+                        className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
+                      />
+                      <span className="ml-3 text-gray-700 font-medium">
+                        🏡 Self Owned / स्वयं का
+                      </span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1304,7 +1307,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-1 font-bold">
                   Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
                 {form.image && (
@@ -1333,7 +1336,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-1 font bold">
                   Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
                 {form.image && (
@@ -1377,11 +1380,13 @@ const RegistrationForm = () => {
               </span>
             </div>
           )}
-          {/* <TermsAndConditionsPage/> */}
+          <TermsAndConditionsPage/>
+          
+          
           <div className="flex justify-center pt-6">
             <button
               type="submit"
-              className={`flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-lg text-white ${
+              className={`w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 font-bold rounded-xl text-white ${
                 loading
                   ? "bg-pink-400 cursor-not-allowed"
                   : "bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
