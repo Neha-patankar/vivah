@@ -28,7 +28,7 @@ import RegistrationForm from "./components/Registration/RegistrationForm";
 function App() {
   return (
    <div>
-    {/* <VivahMahuratBanner/> */}
+    <VivahMahuratBanner/>
     
     <Router>
       <ScrollToTop/>
