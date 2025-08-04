@@ -86,8 +86,8 @@ const RegistrationForm = () => {
     mamaCity: "",
 
     // Other Details
-    twoWheeler: "",
-    fourWheeler: "",
+    twoWheeler: "No",
+    fourWheeler: "No",
     homeStatus: "", // Home Ownership Status (e.g., Own, Rented, Ancestral)
     physicalDisability: {
       hasDisability: "No",
@@ -301,12 +301,29 @@ const RegistrationForm = () => {
   const sectionTitleClasses =
     "text-2xl font-bold mb-6 text-pink-700 border-b-2 border-pink-200 pb-3";
 
+  const generateHeightOptions = () => {
+    const options = [];
+    for (let feet = 4; feet <= 7; feet++) {
+      for (let inch = 0; inch <= 11; inch++) {
+        const value = `${feet}.${inch}`;
+        options.push(
+          <option key={value} value={value}>
+            {feet} feet {inch} inches
+          </option>
+        );
+      }
+    }
+    return options;
+  };
+
   return (
     // <div className="min-h-screen bg-gradient-to-br from-yellow-500 to-purple-700 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
     <div className="min-h-screen bg-[url('/homeSlider/vivahmanin77.png')] bg-cover bg-center p-4 sm:p-6 lg:p-8 flex items-center justify-center">
       <div className="bg-yellow-400 rounded-xl shadow-2xl p-6 sm:p-8 lg:p-10 w-full max-w-6xl border-2  border-pink-400 animate-fade-in-up">
         <h1 className="sm:text-2xl text-md font-extrabold text-center text-white mb-8 sm:mb-10  mt-2 ">
-          <span className="bg-pink-500 p-2 border-spacing-4 rounded-xl border-2 border-purple-700">Vivah Registration</span>
+          <span className="bg-pink-500 p-2 border-spacing-4 rounded-xl border-2 border-purple-700">
+            Vivah Registration
+          </span>
         </h1>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -322,8 +339,6 @@ const RegistrationForm = () => {
               Personal Information / व्यक्तिगत जानकारी
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6  p-2 mt-0  border-pink-400  shadow-2xl">
-
-              
               <div>
                 <label className={`font-bold text-md text-black `}>
                   Full Name / पूरा नाम
@@ -395,7 +410,7 @@ const RegistrationForm = () => {
               </div>
 
               <div className="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div>
+                {/* <div>
                   <label className={labelClasses}>Height (Feet)/(Inches)</label>
                   <input
                     type="number"
@@ -407,20 +422,39 @@ const RegistrationForm = () => {
                     max="8"
                     className={inputClasses}
                   />
+                </div> */}
+                <div>
+                  <label className={labelClasses}>Height (Feet.Inches)</label>
+                  <select
+                    name="height"
+                    value={form.height}
+                    onChange={handleChange}
+                    className={inputClasses}
+                  >
+                    <option value="">Select Height</option>
+                    {generateHeightOptions()}
+                  </select>
                 </div>
+
                 <div>
                   <label className={labelClasses}>
-                    Skin Color / त्वचा का कलर
+                    Skin Color / त्वचा का रंग
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="skinColor"
                     value={form.skinColor}
                     onChange={handleChange}
-                    placeholder="e.g., Fair"
                     className={inputClasses}
-                  />
+                  >
+                    <option value="">Select Skin Color / त्वचा चुनें</option>
+                    <option value="Fair">Fair / गोरा</option>
+                    <option value="Wheatish">Wheatish / गेहुआ</option>
+                    <option value="Dark">Dark / सांवला</option>
+                    <option value="Very Fair">Very Fair / अत्यंत गोरा</option>
+                    <option value="Dusky">Dusky / सांवलेपन की ओर</option>
+                  </select>
                 </div>
+
                 <div>
                   <label className={labelClasses}>Weight (KG) / वजन</label>
                   <input
@@ -642,7 +676,7 @@ const RegistrationForm = () => {
               Occupation Details / व्यवसाय विवरण
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2  shadow-2xl">
-              <div>
+              {/* <div>
                 <label className={labelClasses}>
                   Occupation Type / व्यवसाय{" "}
                   <span className="text-red-500">*</span>
@@ -656,7 +690,41 @@ const RegistrationForm = () => {
                   placeholder="e.g., Private Job, Government Job, Business"
                   className={inputClasses}
                 />
+              </div> */}
+
+              <div>
+                <label className={labelClasses}>
+                  Occupation Type / व्यवसाय{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="occupation"
+                  value={form.occupation}
+                  onChange={handleChange}
+                  required
+                  className={inputClasses}
+                >
+                  <option value="">Select Occupation</option>
+                  <option value="Family Business">Family Business</option>
+                  <option value="Private Job">Private Job</option>
+                  <option value="Government Job">Government Job</option>
+                  <option value="Housewife">Housewife</option>
+                  <option value="Lawyer">Lawyer</option>
+                  <option value="Doctor">Doctor</option>
+                  <option value="Chartered Accountant">
+                    Chartered Accountant
+                  </option>
+                  <option value="Company Secretary">Company Secretary</option>
+                  <option value="Army Person">Army Person</option>
+                  <option value="Police Service">Police Service</option>
+                  <option value="Self Employed">Self Employed</option>
+                  <option value="Self Business">Self Business</option>
+                  <option value="Teacher">Teacher</option>
+                  <option value="Professor">Professor</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
+
               <div>
                 <label className={labelClasses}>
                   Occupation Company / कंपनी का नाम
@@ -1163,7 +1231,6 @@ const RegistrationForm = () => {
                 Physical Disability / शारीरिक अक्षमता
               </h4>
               <div className="flex items-center gap-4 mb-4">
-                
                 <div className="flex items-center space-x-6">
                   <label className="inline-flex items-center bg-white p-2 rounded-lg border border-pink-200 cursor-pointer hover:bg-pink-50 transition-colors">
                     <input
@@ -1256,38 +1323,37 @@ const RegistrationForm = () => {
                   </div>
                 )}
               </div>
-           
 
-            <div>
-              <label className={labelClasses}>Upload Personal Photo</label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Accepted formats: JPG, PNG, GIF (Max 5MB)
-              </p>
-              {form.image && (
-                <p className="text-sm text-gray-600 mt-2">
-                  Selected:{" "}
-                  <span className="font-medium">{form.image.name}</span>
+              <div>
+                <label className={labelClasses}>Upload Personal Photo</label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
-              )}
-              {imagePreview && ( // Display image preview if available
-                <div className="mt-4 flex justify-center">
-                  <img
-                    src={imagePreview}
-                    alt="Image Preview"
-                    className="max-w-xs max-h-48 rounded-lg shadow-md border border-gray-200 object-cover"
-                  />
-                </div>
-              )}
+                {form.image && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Selected:{" "}
+                    <span className="font-medium">{form.image.name}</span>
+                  </p>
+                )}
+                {imagePreview && ( // Display image preview if available
+                  <div className="mt-4 flex justify-center">
+                    <img
+                      src={imagePreview}
+                      alt="Image Preview"
+                      className="max-w-xs max-h-48 rounded-lg shadow-md border border-gray-200 object-cover"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-           </div>
 
           {submissionError && (
             <div
@@ -1311,7 +1377,7 @@ const RegistrationForm = () => {
               </span>
             </div>
           )}
-        <TermsAndConditionsPage/>
+          {/* <TermsAndConditionsPage/> */}
           <div className="flex justify-center pt-6">
             <button
               type="submit"

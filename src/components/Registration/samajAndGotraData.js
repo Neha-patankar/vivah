@@ -1,8 +1,4 @@
-// export const samajData = {
-//   Brahmin: ["Vats", "Bhardwaj", "Parashar"],
-//   Vaishya: ["Kashyap", "Goyal", "Mittal"],
-//   Kshatriya: ["Raghuvanshi", "Maurya", "Chauhan"],
-// };
+
 
 
 export const samajData = {
