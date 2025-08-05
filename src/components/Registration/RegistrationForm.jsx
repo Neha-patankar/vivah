@@ -297,7 +297,7 @@ const RegistrationForm = () => {
   };
   // Common input/select/textarea classes
   const inputClasses =
-    "w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors shadow-sm";
+    "w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors shadow-sm";
   const labelClasses = "block text-sm font-bold mb-1 text-black";
   const sectionTitleClasses =
     "text-2xl font-bold mb-6 text-pink-700 border-b-2 border-pink-200 pb-3";
@@ -321,7 +321,7 @@ const RegistrationForm = () => {
     // <div className="min-h-screen bg-gradient-to-br from-yellow-500 to-purple-700 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
     <div className="min-h-screen bg-[url('/homeSlider/vivahmanin77.png')] bg-cover bg-center p-4 sm:p-6 lg:p-8 flex items-center justify-center">
       <div className="bg-yellow-400 rounded-xl shadow-2xl p-6 sm:p-8 lg:p-10 w-full max-w-6xl border-2  border-pink-400 animate-fade-in-up">
-        <h1 className="sm:text-2xl text-md font-extrabold text-center text-white mb-8 sm:mb-10  mt-2 ">
+        <h1 className="sm:text-2xl text-md font-extrabold text-center text-white mb-8 sm:mb-10  sm:mt-2 mt-10">
           <span className="bg-pink-500 p-2 border-spacing-4 rounded-xl border-2 border-purple-700">
             Vivah Registration
           </span>
@@ -331,13 +331,14 @@ const RegistrationForm = () => {
           {/* Basic Details */}
           <div>
             <h3
-              className={` w-full  bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            >
+              className={` w-full  bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
+            > 
+            <span className="sm:text-lg text-xs font-bold">
               <User
                 className="inline-block mr-2 text-white font-bold "
-                size={24}
+                size={20}
               />{" "}
-              Personal Information / व्यक्तिगत जानकारी
+             Personal Information / व्यक्तिगत जानकारी</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6  p-2 mt-0  border-pink-400  shadow-2xl">
               <div>
@@ -509,10 +510,11 @@ const RegistrationForm = () => {
           {/* Address Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
+              className={`w-full  bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
+               <span className="sm:text-lg text-xs font-bold">
               <MapPin className="inline-block mr-2 text-white" size={24} />{" "}
-              Address Details
+              Address Details / स्थायी पता</span>
             </h3>
             <div className="space-y-6">
               <div className=" p-4   shadow-inner">
@@ -580,13 +582,14 @@ const RegistrationForm = () => {
           {/* Kundli Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
+              <span className="sm:text-lg text-xs font-bold">
               <Star
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Kundli Details/कुंडली जानकारी
+              Kundli Details/कुंडली जानकारी</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2  shadow-2xl">
               <div>
@@ -668,13 +671,14 @@ const RegistrationForm = () => {
           {/* Occupation Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
+              <span className="sm:text-lg text-xs font-bold">
               <Briefcase
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Occupation Details / व्यवसाय विवरण
+              Occupation Details / व्यवसाय विवरण</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2  shadow-2xl">
               {/* <div>
@@ -788,13 +792,13 @@ const RegistrationForm = () => {
           {/* Contact Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            >
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
+            ><span className="sm:text-lg text-xs font-bold">
               <Phone
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Contact Details
+              Contact Details/ संपर्क विवरण </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2 mt-0  shadow-2xl ">
               <div>
@@ -849,13 +853,13 @@ const RegistrationForm = () => {
           {/* Family Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            >
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
+            ><span className="sm:text-lg text-xs font-bold">
               <Users
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Family Details/परिवार का विवरण
+              Family Details/परिवार का विवरण</span>
             </h3>
             <div className=" p-2 ">
               <div className="">
@@ -1056,13 +1060,14 @@ const RegistrationForm = () => {
           {/* Other Details */}
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
+              <span className="sm:text-lg text-xs font-bold">
               <Package
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Other Details / अन्य विवरण
+              Other Details / अन्य विवरण</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2 shadow-2xl">
               <div>
@@ -1132,7 +1137,8 @@ const RegistrationForm = () => {
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                       />
                       <span className="ml-3 text-gray-700 font-medium">
-                        🏍️ Two Wheeler / 2 पहिया वाहन
+                        {/* 🏍️ Two Wheeler / 2 पहिया वाहन */}
+                         Two Wheeler / 2 पहिया वाहन
                       </span>
                     </label>
                   </div>
@@ -1152,7 +1158,8 @@ const RegistrationForm = () => {
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                       />
                       <span className="ml-3 text-gray-700 font-medium">
-                        🚗 Four Wheeler / 4 पहिया वाहन
+                        {/* 🚗 Four Wheeler / 4 पहिया वाहन */}
+                        Four Wheeler / 4 पहिया वाहन
                       </span>
                     </label>
                   </div>
@@ -1188,7 +1195,8 @@ const RegistrationForm = () => {
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
                       />
                       <span className="ml-3 text-gray-700 font-medium">
-                        🏠 Rented / किराये का
+                        {/* 🏠 Rented / किराये का */}
+                          Rented / किराये का
                       </span>
                     </label>
                   </div>
@@ -1209,7 +1217,8 @@ const RegistrationForm = () => {
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
                       />
                       <span className="ml-3 text-gray-700 font-medium">
-                        🏡 Self Owned / स्वयं का
+                        {/* 🏡 Self Owned / स्वयं का */}
+                        Self Owned / स्वयं का
                       </span>
                     </label>
                   </div>
@@ -1289,17 +1298,17 @@ const RegistrationForm = () => {
 
           <div>
             <h3
-              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            >
+              className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
+            ><span className="sm:text-lg text-xs font-bold">
               <Heart
                 className="inline-block mr-2 text-white font-bold"
                 size={24}
               />{" "}
-              Profile Photo
+             Photo/ फोटो</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4  p-2  shadow-2xl ">
               <div>
-                <label className={labelClasses}>Upload Photo</label>
+                <label className={labelClasses}>Upload  Profile  Photo</label>
                 <input
                   type="file"
                   name="image"
@@ -1307,7 +1316,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
                 />
-                <p className="text-xs text-gray-500 mt-1 font-bold">
+                <p className="text-xs text-white mt-1 font-bold">
                   Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
                 {form.image && (
@@ -1336,7 +1345,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
                 />
-                <p className="text-xs text-gray-500 mt-1 font bold">
+                <p className="text-xs text-white mt-1 font bold">
                   Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
                 {form.image && (
@@ -1386,7 +1395,7 @@ const RegistrationForm = () => {
           <div className="flex justify-center pt-6">
             <button
               type="submit"
-              className={`w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 font-bold rounded-xl text-white ${
+              className={`w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 font-bold rounded-xl  ${
                 loading
                   ? "bg-pink-400 cursor-not-allowed"
                   : "bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
