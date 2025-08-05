@@ -255,10 +255,8 @@ const TermsAndConditionsPage = () => {
                   <span className="text-pink-600 hover:text-pink-700 underline font-bold">
                     Terms and Conditions
                   </span>{" "}
-                  and{" "}
-                  <span className="text-pink-600 hover:text-pink-700 underline">
-                    Privacy Policy
-                  </span>
+                
+                
                 </label>
               </div>
             </div>

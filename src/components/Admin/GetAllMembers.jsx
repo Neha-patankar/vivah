@@ -75,14 +75,15 @@ const GetAllMembers = () => {
           <tr className="bg-gray-200">
             <th className="border p-2">S.no</th>
             <th className="border p-2">Member code</th>
-            <th className="border p-2">Image</th>
+           <th className="border p-2">Image</th>
+           <th className="border p-2">Personalimage </th>
             <th className="border p-2">Name</th>
             {/* <th className="border p-2">Email</th> */}
             <th className="border p-2">Samaj</th>
             <th className="border p-2">Gotra</th>
             <th className="border p-2">Login no</th>
             <th className="border p-2">Gender</th>
-            <th className="border p-2">Address</th>
+            <th className="border p-2">City</th>
             <th className="border p-2">Status</th>
             <th className="border p-2">Vivah Code</th>
             <th className="border p-2">Actions</th>
@@ -97,6 +98,15 @@ const GetAllMembers = () => {
                 {item.image && (
                   <img
                     src={`http://localhost:5555/uploads/${item.image}`}
+                    alt={item.name}
+                    className="w-16 h-16 object-cover rounded-full mx-auto"
+                  />
+                )}
+              </td>
+                   <td className="border p-2 text-center">
+                {item.personalimage && (
+                  <img
+                    src={`http://localhost:5555/uploads/${item.personalimage }`}
                     alt={item.name}
                     className="w-16 h-16 object-cover rounded-full mx-auto"
                   />

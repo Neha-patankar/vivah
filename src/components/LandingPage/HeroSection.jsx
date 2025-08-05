@@ -26,9 +26,9 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 text-center max-w-6xl mx-auto">
         {/* Image Row */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-8">
+        <div className="flex flex-row items-center justify-center gap-4 flex-wrap mb-6">
           {/* Bride Image */}
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-pink-600 shadow-md">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-pink-600 shadow-md">
             <img
               src="/HeroSection/brides.png"
               alt="Bride"
@@ -37,7 +37,7 @@ const HeroSection = () => {
           </div>
 
           {/* Logo */}
-          <div className="w-32 md:w-52 mx-auto">
+          <div className="w-28 md:w-40 mx-2">
             <img
               src="/vivahlogo.png"
               alt="Vivah Logo"
@@ -46,11 +46,11 @@ const HeroSection = () => {
           </div>
 
           {/* Groom Image */}
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-blue-700 shadow-md">
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-blue-700 shadow-md">
             <img
               src="/HeroSection/groom.png"
               alt="Groom"
-              className="w-full h-90 object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>

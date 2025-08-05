@@ -20,7 +20,28 @@ import { samajData } from "./samajAndGotraData";
 import TermsAndConditionsPage from "./TermsAndCondition";
 
 const RegistrationForm = () => {
-  
+  // State for location data from API
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // State for managing auto-complete search terms and selections
+  const [selectedCountryID, setSelectedCountryID] = useState("");
+  const [selectedStateID, setSelectedStateID] = useState("");
+  const [selectedCityID, setSelectedCityID] = useState("");
+
+  const [countrySearchTerm, setCountrySearchTerm] = useState("");
+  const [stateSearchTerm, setStateSearchTerm] = useState("");
+  const [citySearchTerm, setCitySearchTerm] = useState("");
+
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filteredStates, setFilteredStates] = useState([]);
+  const [filteredCities, setFilteredCities] = useState([]);
+
+  const [showCountrySuggestions, setShowCountrySuggestions] = useState(false);
+  const [showStateSuggestions, setShowStateSuggestions] = useState(false);
+  const [showCitySuggestions, setShowCitySuggestions] = useState(false);
+
   const [form, setForm] = useState({
     // Basic Details
     name: "",
@@ -34,13 +55,10 @@ const RegistrationForm = () => {
     weightInKG: "",
     maritalStatus: "",
 
-    // Children Details (for widow/divorced)
-    // children: [], // Array of { gender: '', age: '' } objects
-
     // Address
     permanentAddress: {
       address: "",
-      status: "", // e.g., Own, Rented, Ancestral
+      states: "", // This will now store the state name
       district: "",
       pincode: "",
     },
@@ -55,11 +73,11 @@ const RegistrationForm = () => {
 
     // Occupation Details
     education: "",
-    occupation: "", // e.g., Private Job, Government Job, Business
-    occupationName: "", // Company/Business Name
+    occupation: "",
+    occupationName: "",
     designation: "",
     jobCity: "",
-    monthlyIncome: "", // Can be a string to allow "5 Lakhs" or "50000"
+    monthlyIncome: "",
 
     // Contact Details
     phone: "",
@@ -67,7 +85,7 @@ const RegistrationForm = () => {
     whatsappNumber: "",
 
     // Family Details
-    familyType: "", // e.g., Joint, Nuclear
+    familyType: "",
     fatherName: "",
     fatherOccupation: "",
     fatherMobile: "",
@@ -89,18 +107,19 @@ const RegistrationForm = () => {
     // Other Details
     twoWheeler: "No",
     fourWheeler: "No",
-    homeStatus: "", // Home Ownership Status (e.g., Own, Rented, Ancestral)
+    homeStatus: "",
     physicalDisability: {
       hasDisability: "No",
       description: "",
     },
 
     // Image
-    image: null, // For file upload
+    image: null,
     personalimage: null,
   });
 
-  const [imagePreview, setImagePreview] = useState(null); // New state for image preview URL
+  const [imagePreview, setImagePreview] = useState(null);
+  const [personalImagePreview, setPersonalImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submissionError, setSubmissionError] = useState(null);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
@@ -121,34 +140,220 @@ const RegistrationForm = () => {
     }
   }, [form.dob]);
 
+  // Fetch countries on component mount
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5555/api/location/countries"
+        );
+        setCountries(response.data);
+        setFilteredCountries(response.data);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  // Filter countries based on search term
+  useEffect(() => {
+    const results = countries.filter((country) =>
+      country.countryName
+        .toLowerCase()
+        .includes(countrySearchTerm.toLowerCase())
+    );
+    setFilteredCountries(results);
+  }, [countrySearchTerm, countries]);
+
+  // Filter states based on search term
+  useEffect(() => {
+    const results = states.filter((state) =>
+      state.stateName.toLowerCase().includes(stateSearchTerm.toLowerCase())
+    );
+    setFilteredStates(results);
+  }, [stateSearchTerm, states]);
+
+  // Filter cities based on search term
+  useEffect(() => {
+    const results = cities.filter((city) =>
+      city.cityName.toLowerCase().includes(citySearchTerm.toLowerCase())
+    );
+    setFilteredCities(results);
+  }, [citySearchTerm, cities]);
+
+  // --- Handlers for auto-complete functionality ---
+
+  const handleCountrySearch = (event) => {
+    const searchTerm = event.target.value;
+    setCountrySearchTerm(searchTerm);
+    setShowCountrySuggestions(true);
+
+    if (searchTerm === "") {
+      setSelectedCountryID("");
+      setStates([]);
+      setCities([]);
+      setStateSearchTerm("");
+      setCitySearchTerm("");
+      setForm((prevForm) => ({
+        ...prevForm,
+        permanentAddress: { ...prevForm.permanentAddress, states: "" },
+        currentCity: "",
+      }));
+    }
+  };
+
+  const handleCountrySelect = async (countryID) => {
+    const country = countries.find((c) => c.countryID === countryID);
+    setSelectedCountryID(countryID);
+    setCountrySearchTerm(country ? country.countryName : "");
+    setShowCountrySuggestions(false);
+
+    setSelectedStateID("");
+    setStates([]);
+    setCities([]);
+    setStateSearchTerm("");
+    setCitySearchTerm("");
+    setForm((prevForm) => ({
+      ...prevForm,
+      permanentAddress: { ...prevForm.permanentAddress, states: "" },
+      currentCity: "",
+    }));
+
+    if (countryID) {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:5555/api/location/states/${countryID}`
+        );
+        setStates(response.data);
+        setFilteredStates(response.data);
+      } catch (error) {
+        console.error("Error fetching states:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleStateSearch = (event) => {
+    const searchTerm = event.target.value;
+    setStateSearchTerm(searchTerm);
+    setShowStateSuggestions(true);
+
+    if (searchTerm === "") {
+      setSelectedStateID("");
+      setCities([]);
+      setCitySearchTerm("");
+      setForm((prevForm) => ({
+        ...prevForm,
+        permanentAddress: { ...prevForm.permanentAddress, states: "" },
+        currentCity: "",
+      }));
+    }
+  };
+
+  const handleStateSelect = async (stateID) => {
+    const state = states.find((s) => s.stateID === stateID);
+    setSelectedStateID(stateID);
+    setStateSearchTerm(state ? state.stateName : "");
+    setShowStateSuggestions(false);
+
+    // Update the form state with the selected state name
+    setForm((prevForm) => ({
+      ...prevForm,
+      permanentAddress: {
+        ...prevForm.permanentAddress,
+        states: state ? state.stateName : "",
+      },
+      currentCity: "", // Clear city when a new state is selected
+    }));
+
+    setSelectedCityID("");
+    setCities([]);
+    setCitySearchTerm("");
+
+    if (stateID) {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:5555/api/location/cities/${stateID}`
+        );
+        setCities(response.data);
+        setFilteredCities(response.data);
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleCitySearch = (event) => {
+    const searchTerm = event.target.value;
+    setCitySearchTerm(searchTerm);
+    setShowCitySuggestions(true);
+
+    if (searchTerm === "") {
+      setSelectedCityID("");
+      setForm((prevForm) => ({ ...prevForm, currentCity: "" }));
+    }
+  };
+
+  const handleCitySelect = (cityID) => {
+    const city = cities.find((c) => c.cityID === cityID);
+    setSelectedCityID(cityID);
+    setCitySearchTerm(city ? city.cityName : "");
+    setShowCitySuggestions(false);
+
+    // Update the form state with the selected city name
+    setForm((prevForm) => ({
+      ...prevForm,
+      currentCity: city ? city.cityName : "",
+    }));
+  };
+
+  // --- Other Handlers ---
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
-    setSubmissionError(null); // Clear previous errors on input change
-    setSubmissionSuccess(false); // Clear success message
+    setSubmissionError(null);
+    setSubmissionSuccess(false);
 
     if (type === "file") {
-      setForm({ ...form, [name]: files[0] });
-      // Create a preview URL for the selected image
-      if (files[0]) {
-        setImagePreview(URL.createObjectURL(files[0]));
+      const selectedFile = files[0];
+      setForm((prevForm) => ({
+        ...prevForm,
+        [name]: selectedFile,
+      }));
+      if (selectedFile) {
+        const previewURL = URL.createObjectURL(selectedFile);
+        if (name === "image") {
+          setImagePreview(previewURL);
+        } else if (name === "personalimage") {
+          setPersonalImagePreview(previewURL);
+        }
       } else {
-        setImagePreview(null);
+        if (name === "image") {
+          setImagePreview(null);
+        } else if (name === "personalimage") {
+          setPersonalImagePreview(null);
+        }
       }
     } else if (name.startsWith("permanentAddress.")) {
       const field = name.split(".")[1];
-      setForm({
-        ...form,
-        permanentAddress: { ...form.permanentAddress, [field]: value },
-      });
+      setForm((prevForm) => ({
+        ...prevForm,
+        permanentAddress: { ...prevForm.permanentAddress, [field]: value },
+      }));
     } else if (name.startsWith("physicalDisability.")) {
       const field = name.split(".")[1];
-      setForm({
-        ...form,
-        physicalDisability: { ...form.physicalDisability, [field]: value },
-      });
+      setForm((prevForm) => ({
+        ...prevForm,
+        physicalDisability: { ...prevForm.physicalDisability, [field]: value },
+      }));
     } else {
-      // Handle number inputs specifically
       if (
         [
           "heightFeet",
@@ -162,10 +367,12 @@ const RegistrationForm = () => {
           "unmarriedSisters",
         ].includes(name)
       ) {
-        // Allow empty string for number fields, or convert to number
-        setForm({ ...form, [name]: value === "" ? "" : Number(value) });
+        setForm((prevForm) => ({
+          ...prevForm,
+          [name]: value === "" ? "" : Number(value),
+        }));
       } else {
-        setForm({ ...form, [name]: value });
+        setForm((prevForm) => ({ ...prevForm, [name]: value }));
       }
     }
   };
@@ -173,42 +380,31 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setSubmissionError(null); // Clear any previous errors
-    setSubmissionSuccess(false); // Clear any previous success messages
-
+    setSubmissionError(null);
+    setSubmissionSuccess(false);
     const formData = new FormData();
-
     try {
-      // Iterate over form state and append to FormData
       for (const key in form) {
         const value = form[key];
-
         if (value === null || value === undefined) {
-          continue; // Skip null or undefined values
+          continue;
         }
-
-        if (key === "image") {
+        if (key === "image" || key === "personalimage") {
           if (value) {
-            // Only append image if it exists
             formData.append(key, value);
           }
         } else if (typeof value === "object" && !Array.isArray(value)) {
-          // Handle nested objects: permanentAddress, physicalDisability
-          // Append individual properties to formData
           for (const subKey in value) {
             if (value[subKey] !== null && value[subKey] !== undefined) {
               formData.append(`${key}.${subKey}`, value[subKey]);
             }
           }
         } else if (Array.isArray(value)) {
-          // Stringify arrays like 'children'
           formData.append(key, JSON.stringify(value));
         } else {
-          // Handle primitive values (strings, numbers)
           formData.append(key, value);
         }
       }
-
       const res = await axios.post(
         "http://localhost:5555/api/registrations",
         formData,
@@ -216,7 +412,6 @@ const RegistrationForm = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-
       setSubmissionSuccess(true);
       // Reset form after successful submission
       setForm({
@@ -232,7 +427,7 @@ const RegistrationForm = () => {
         maritalStatus: "",
         permanentAddress: {
           address: "",
-          status: "",
+          states: "",
           district: "",
           pincode: "",
         },
@@ -273,7 +468,8 @@ const RegistrationForm = () => {
         physicalDisability: { hasDisability: "No", description: "" },
         image: null,
       });
-      setImagePreview(null); // Clear image preview on successful submission
+      setImagePreview(null);
+      setPersonalImagePreview(null);
       console.log("Submission Response:", res.data);
     } catch (err) {
       console.error("Submission Error:", err.response?.data || err.message);
@@ -287,15 +483,16 @@ const RegistrationForm = () => {
       setLoading(false);
     }
   };
+
   const handleChanges = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "samajName" ? { gotraName: "" } : {}), // Reset gotra on samaj change
+      ...(name === "samajName" ? { gotraName: "" } : {}),
     }));
   };
-  // Common input/select/textarea classes
+
   const inputClasses =
     "w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-colors shadow-sm";
   const labelClasses = "block text-sm font-bold mb-1 text-black";
@@ -306,6 +503,7 @@ const RegistrationForm = () => {
     const options = [];
     for (let feet = 4; feet <= 7; feet++) {
       for (let inch = 0; inch <= 11; inch++) {
+        if (feet === 7 && inch > 0) break;
         const value = `${feet}.${inch}`;
         options.push(
           <option key={value} value={value}>
@@ -332,19 +530,20 @@ const RegistrationForm = () => {
           <div>
             <h3
               className={` w-full  bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            > 
-            <span className="sm:text-lg text-xs font-bold">
-              <User
-                className="inline-block mr-2 text-white font-bold "
-                size={20}
-              />{" "}
-             Personal Information / व्यक्तिगत जानकारी</span>
+            >
+              <span className="sm:text-lg text-xs font-bold">
+                <User
+                  className="inline-block mr-2 text-white font-bold "
+                  size={20}
+                />{" "}
+                Personal Information / व्यक्तिगत जानकारी
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6  p-2 mt-0  border-pink-400  shadow-2xl">
               <div>
                 <label className={`font-bold text-md text-black `}>
                   Full Name / पूरा नाम
-                  <span className="text-red-500 text-lg font-bold">*</span>
+                  <span className="text-red-500 text-lg font-bold"> *</span>
                 </label>
                 <input
                   type="text"
@@ -358,7 +557,7 @@ const RegistrationForm = () => {
               </div>
               <div>
                 <label className={labelClasses}>
-                  Gender/ लिंग <span className="text-red-500">*</span>
+                  Gender/ लिंग <span className="text-red-500"> *</span>
                 </label>
                 <select
                   name="gender"
@@ -368,14 +567,16 @@ const RegistrationForm = () => {
                   className={inputClasses}
                 >
                   <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="Male">Male/पुरुष</option>
+                  <option value="Female">Female/महिला</option>
                 </select>
               </div>
 
               {/* Samaj Dropdown */}
               <div>
-                <label className={labelClasses}>Samaj Name / समाज नाम</label>
+                <label className={labelClasses}>
+                  Samaj Name / समाज नाम<span className="text-red-500"> *</span>
+                </label>
                 <select
                   name="samajName"
                   value={form.samajName}
@@ -393,7 +594,10 @@ const RegistrationForm = () => {
 
               {/* Gotra Dropdown */}
               <div>
-                <label className={labelClasses}>Gotra Name / आपकी गोत्र</label>
+                <label className={labelClasses}>
+                  Gotra Name / आपकी गोत्र
+                  <span className="text-red-500"> *</span>
+                </label>
                 <select
                   name="gotraName"
                   value={form.gotraName}
@@ -412,24 +616,14 @@ const RegistrationForm = () => {
               </div>
 
               <div className="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {/* <div>
-                  <label className={labelClasses}>Height (Feet)/(Inches)</label>
-                  <input
-                    type="number"
+                <div>
+                  <label className={labelClasses}>
+                    Height (Feet.Inches){" "}
+                    <span className="text-red-500"> *</span>
+                  </label>
+                  <select
                     name="heightFeet"
                     value={form.heightFeet}
-                    onChange={handleChange}
-                    placeholder="e.g., 5"
-                    min="0"
-                    max="8"
-                    className={inputClasses}
-                  />
-                </div> */}
-                <div>
-                  <label className={labelClasses}>Height (Feet.Inches)</label>
-                  <select
-                    name="height"
-                    value={form.height}
                     onChange={handleChange}
                     className={inputClasses}
                   >
@@ -453,7 +647,7 @@ const RegistrationForm = () => {
                     <option value="Wheatish">Wheatish / गेहुआ</option>
                     <option value="Dark">Dark / सांवला</option>
                     <option value="Very Fair">Very Fair / अत्यंत गोरा</option>
-                    <option value="Dusky">Dusky / सांवलेपन की ओर</option>
+                    {/* <option value="Dusky">Dusky / सांवलेपन की ओर</option> */}
                   </select>
                 </div>
 
@@ -474,6 +668,7 @@ const RegistrationForm = () => {
               <div>
                 <label className={labelClasses}>
                   Marital Status / वैवाहिक स्थिति
+                  <span className="text-red-500"> *</span>
                 </label>
                 <select
                   name="maritalStatus"
@@ -482,9 +677,9 @@ const RegistrationForm = () => {
                   className={inputClasses}
                 >
                   <option value="">Select Status</option>
-                  <option value="Single">Unmarried</option>
-                  <option value="Widow">Widow</option>
-                  <option value="Divorced">Divorcee</option>
+                  <option value="Single">Unmarried/अविवाहित</option>
+                  <option value="Widow">Widow/विधवा विधुर</option>
+                  <option value="Divorced">Divorcee/तलाकशुदा</option>
                 </select>
               </div>
               <div>
@@ -508,75 +703,143 @@ const RegistrationForm = () => {
           {/* <hr className="border-purple-600 border-2 " /> */}
 
           {/* Address Details */}
+          
+{/* Address Details */}
           <div>
-            <h3
-              className={`w-full  bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            >
-               <span className="sm:text-lg text-xs font-bold">
-              <MapPin className="inline-block mr-2 text-white" size={24} />{" "}
-              Address Details / स्थायी पता</span>
+            <h3 className={`w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}>
+              <span className="sm:text-lg text-xs font-bold">
+                <MapPin className="inline-block mr-2 text-white" size={24} />{" "}
+                Address Details / स्थायी पता
+              </span>
             </h3>
             <div className="space-y-6">
-              <div className=" p-4   shadow-inner">
+              <div className="p-4 shadow-inner">
                 <h4 className="font-medium text-lg mb-4 text-gray-800">
-                  Permanent Address / स्थायी पता
+                  Permanent Address / स्थायी पता{" "}
+                  <span className="text-red-500"> *</span>
                 </h4>
                 <div className="space-y-4">
                   <div>
-                    {/* <label className={labelClasses}>
-                      Permanent Street Address
-                    </label> */}
                     <textarea
-                      name="permanentAddress.address"
-                      value={form.permanentAddress.address}
+                      name="address"
+                      // value={form.permanentAddress.address}
+                      value={form.address}
                       onChange={handleChange}
                       rows="3"
                       placeholder="Enter permanent address"
                       className={inputClasses}
                     />
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {/* Country */}
                     <div>
-                      <label className={labelClasses}>State / राज्य </label>
+                      <label htmlFor="country" className="block font-semibold mb-1 text-gray-700">
+                        Country
+                      </label>
                       <input
                         type="text"
-                        name="permanentAddress.status" // Renamed from 'status' to reflect 'state' or general address info
-                        value={form.permanentAddress.status}
-                        onChange={handleChange}
-                        placeholder="Enter state"
-                        className={inputClasses}
+                        id="country"
+                        value={countrySearchTerm}
+                        onChange={handleCountrySearch}
+                        placeholder="Type to search country..."
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                       />
+                      {showCountrySuggestions && countrySearchTerm && filteredCountries.length > 0 && (
+                        <ul className="border rounded-lg mt-2 max-h-40 overflow-y-auto bg-white shadow-md z-10">
+                          {filteredCountries.map((country) => (
+                            <li
+                              key={country.countryID}
+                              onClick={() => handleCountrySelect(country.countryID)}
+                              className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                            >
+                              {country.countryName}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
+
+                    {/* State */}
                     <div>
-                      <label className={labelClasses}>City / शहर</label>
+                      <label htmlFor="state" className="block font-semibold mb-1 text-gray-700">
+                        State
+                      </label>
                       <input
                         type="text"
-                        name="currentCity"
-                        value={form.currentCity}
-                        onChange={handleChange}
-                        placeholder="Enter current city"
-                        className={inputClasses}
+                        id="state"
+                        value={stateSearchTerm}
+                        onChange={handleStateSearch}
+                        disabled={!selectedCountryID}
+                        placeholder="Type to search state..."
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
                       />
+                      {showStateSuggestions && stateSearchTerm && filteredStates.length > 0 && (
+                        <ul className="border rounded-lg mt-2 max-h-40 overflow-y-auto bg-white shadow-md z-10">
+                          {filteredStates.map((state) => (
+                            <li
+                              key={state.stateID}
+                              onClick={() => handleStateSelect(state.stateID)}
+                              className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                            >
+                              {state.stateName}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
+
+                    {/* City */}
                     <div>
-                      <label className={labelClasses}>Pincode / पिनकोड</label>
+                      <label htmlFor="city" className="block font-semibold mb-1 text-gray-700">
+                        City
+                      </label>
                       <input
                         type="text"
-                        name="permanentAddress.pincode"
-                        value={form.permanentAddress.pincode}
-                        onChange={handleChange}
-                        placeholder="Enter pincode"
-                        className={inputClasses}
-                        pattern="[0-9]{6}" // Assuming 6-digit Indian pincode
-                        title="Please enter a 6-digit pincode"
+                        id="city"
+                        value={citySearchTerm}
+                        onChange={handleCitySearch}
+                        disabled={!selectedStateID}
+                        placeholder="Type to search city..."
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 disabled:bg-gray-100"
                       />
+                      {showCitySuggestions && citySearchTerm && filteredCities.length > 0 && (
+                        <ul className="border rounded-lg mt-2 max-h-40 overflow-y-auto bg-white shadow-md z-10">
+                          {filteredCities.map((city) => (
+                            <li
+                              key={city.cityID}
+                              onClick={() => handleCitySelect(city.cityID)}
+                              className="px-4 py-2 hover:bg-purple-100 cursor-pointer"
+                            >
+                              {city.cityName}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
+
+                    <div>
+                    <label className={labelClasses}>
+                      Pincode / पिनकोड{" "}
+                      <span className="text-red-500"> *</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="permanentAddress.pincode"
+                      value={form.permanentAddress.pincode}
+                      onChange={handleChange}
+                      placeholder="Enter pincode"
+                      className={inputClasses}
+                      pattern="[0-9]{6}"
+                      title="Please enter a 6-digit pincode"
+                    />
                   </div>
+                    
+                  </div>
+                 
                 </div>
               </div>
             </div>
           </div>
-
           {/* <hr className="border-pink-200" /> */}
 
           {/* Kundli Details */}
@@ -585,16 +848,18 @@ const RegistrationForm = () => {
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
               <span className="sm:text-lg text-xs font-bold">
-              <Star
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-              Kundli Details/कुंडली जानकारी</span>
+                <Star
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Kundli Details/कुंडली जानकारी
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2  shadow-2xl">
               <div>
                 <label className={labelClasses}>
                   Date of Birth/जन्म दिनांक{" "}
+                  <span className="text-red-500"> *</span>
                   <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -607,17 +872,20 @@ const RegistrationForm = () => {
                 />
               </div>
               <div>
-                <label className={labelClasses}>Age/उम्र</label>
+                <label className={labelClasses}>
+                  Age / उम्र <span className="text-red-500"> *</span>
+                </label>
                 <input
                   type="text"
                   name="age"
-                  value={form.age}
+                  value={form.age ? `${form.age} years` : ""}
                   readOnly
                   disabled
                   placeholder="Age will be calculated"
                   className={inputClasses + " bg-gray-100 cursor-not-allowed"}
                 />
               </div>
+
               <div>
                 <label className={labelClasses}>
                   Birth Time/जन्म टाइम<span className="text-red-500">*</span>
@@ -657,10 +925,10 @@ const RegistrationForm = () => {
                   className={inputClasses}
                 >
                   <option value="">Select Manglik Status</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="Anshik">Anshik</option>
-                  <option value="Dont know">Don't know</option>
+                  <option value="Yes">Yes / हाँ</option>
+                  <option value="No">No / नहीं</option>
+                  <option value="Anshik">Anshik / आंशिक</option>
+                  <option value="Dont know">Don't know / पता नहीं</option>
                 </select>
               </div>
             </div>
@@ -674,29 +942,14 @@ const RegistrationForm = () => {
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
               <span className="sm:text-lg text-xs font-bold">
-              <Briefcase
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-              Occupation Details / व्यवसाय विवरण</span>
+                <Briefcase
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Occupation Details / व्यवसाय विवरण
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2  shadow-2xl">
-              {/* <div>
-                <label className={labelClasses}>
-                  Occupation Type / व्यवसाय{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="occupation"
-                  value={form.occupation}
-                  onChange={handleChange}
-                  required
-                  placeholder="e.g., Private Job, Government Job, Business"
-                  className={inputClasses}
-                />
-              </div> */}
-
               <div>
                 <label className={labelClasses}>
                   Occupation Type / व्यवसाय{" "}
@@ -771,7 +1024,7 @@ const RegistrationForm = () => {
               </div>
               <div>
                 <label className={labelClasses}>
-                  Monthly Income (INR)/ महीने की सैलरी{" "}
+                  Monthly Income (INR)/ मासिक आय{" "}
                   <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -793,18 +1046,20 @@ const RegistrationForm = () => {
           <div>
             <h3
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            ><span className="sm:text-lg text-xs font-bold">
-              <Phone
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-              Contact Details/ संपर्क विवरण </span>
+            >
+              <span className="sm:text-lg text-xs font-bold">
+                <Phone
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Contact Details/ संपर्क विवरण{" "}
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2 mt-0  shadow-2xl ">
               <div>
                 <label className={labelClasses}>
                   Login Number/लॉगिन नंबर{" "}
-                  <span className="text-red-500">*</span>
+                  <span className="text-red-500"> *</span>
                 </label>
                 <input
                   type="tel"
@@ -854,17 +1109,20 @@ const RegistrationForm = () => {
           <div>
             <h3
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            ><span className="sm:text-lg text-xs font-bold">
-              <Users
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-              Family Details/परिवार का विवरण</span>
+            >
+              <span className="sm:text-lg text-xs font-bold">
+                <Users
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Family Details/परिवार का विवरण
+              </span>
             </h3>
             <div className=" p-2 ">
               <div className="">
                 <label className={labelClasses}>
-                  Family Type (परिवार का प्रकार)
+                  Family Type (परिवार का प्रकार){" "}
+                  <span className="text-red-500"> *</span>
                 </label>
                 <select
                   name="familyType"
@@ -884,7 +1142,8 @@ const RegistrationForm = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5 ">
                 <div>
                   <label className={labelClasses}>
-                    Father's Name / पिताजी का नाम
+                    Father's Name / पिताजी का नाम{" "}
+                    <span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="text"
@@ -925,7 +1184,8 @@ const RegistrationForm = () => {
                 </div>
                 <div>
                   <label className={labelClasses}>
-                    Mother's Name / माँ का नाम
+                    Mother's Name / माँ का नाम{" "}
+                    <span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="text"
@@ -966,11 +1226,20 @@ const RegistrationForm = () => {
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-bold">
-                <h4 className="col-span-full font-medium text-lg mb-2 text-purple-800">
+                {/* <h4 className="col-span-full mt-2 mb-2 w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg ">
                   Siblings Details
+                </h4> */}
+
+                <h4 className="col-span-full mt-2 mb-2 w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-xl p-2 text-white font-bold sm:text-xl text-lg flex items-center gap-2">
+                  <Users size={22} className="inline-block text-white" />
+                  Siblings Details / भाई-बहनों का विवरण
                 </h4>
+
                 <div>
-                  <label className={labelClasses}>Total Brothers/कूल भाई</label>
+                  <label className={labelClasses}>
+                    Total Brothers/कूल भाई{" "}
+                    <span className="text-red-500"> *</span>
+                  </label>
                   <input
                     type="number"
                     name="totalBrothers"
@@ -1011,7 +1280,8 @@ const RegistrationForm = () => {
                 </div>
                 <div>
                   <label className={labelClasses}>
-                    Total Sisters/ कूल बहने
+                    Total Sisters/ कूल बहने{" "}
+                    <span className="text-red-500"> *</span>
                   </label>
                   <input
                     type="number"
@@ -1063,15 +1333,19 @@ const RegistrationForm = () => {
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
             >
               <span className="sm:text-lg text-xs font-bold">
-              <Package
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-              Other Details / अन्य विवरण</span>
+                <Package
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Other Details / अन्य विवरण
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6  p-2 shadow-2xl">
               <div>
-                <label className={labelClasses}>Mama's Name/मामा का नाम</label>
+                <label className={labelClasses}>
+                  Mama's Name/मामा का नाम{" "}
+                  <span className="text-red-500"> *</span>
+                </label>
                 <input
                   type="text"
                   name="mamaName"
@@ -1083,7 +1357,8 @@ const RegistrationForm = () => {
               </div>
               <div>
                 <label className={labelClasses}>
-                  Mama's Gotra/मामा की गोत्र
+                  Mama's Gotra/मामा की गोत्र{" "}
+                  <span className="text-red-500"> *</span>
                 </label>
                 <input
                   type="text"
@@ -1107,12 +1382,13 @@ const RegistrationForm = () => {
               </div>
             </div>
             {/* Vehicle & Home Status Wrapper */}
+            {/* Vehicle & Home Status Wrapper */}
             <div className="flex flex-col md:flex-row gap-4">
               {/* Vehicle Details Section */}
-              <div className="mt-6 p-4 shadow-inner flex-1">
-                <h4 className="font-semibold text-lg mb-4 text-gray-800 flex items-center">
+              <div className="flex-1 p-4 rounded-xl shadow-md ">
+                <h4 className="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-lg p-2 text-white font-bold text-lg sm:text-xl flex items-center gap-2 mb-4">
                   <svg
-                    className="w-5 h-5 mr-2 text-pink-600"
+                    className="w-5 h-5 text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -1121,9 +1397,11 @@ const RegistrationForm = () => {
                   </svg>
                   Vehicle Details / वाहन विवरण
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white p-3 rounded-lg border border-pink-200">
-                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* 2 Wheeler */}
+                  <div className="bg-white p-3 rounded-lg border border-pink-200 shadow-sm">
+                    <label className="flex items-center gap-2 cursor-pointer hover:bg-pink-50 p-2 rounded transition">
                       <input
                         type="checkbox"
                         name="twoWheeler"
@@ -1136,15 +1414,15 @@ const RegistrationForm = () => {
                         }
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                       />
-                      <span className="ml-3 text-gray-700 font-medium">
-                        {/* 🏍️ Two Wheeler / 2 पहिया वाहन */}
-                         Two Wheeler / 2 पहिया वाहन
+                      <span className="text-gray-700 font-medium">
+                        2 Wheeler / 2 पहिया वाहन
                       </span>
                     </label>
                   </div>
 
-                  <div className="bg-white p-3 rounded-lg border border-pink-200">
-                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                  {/* 4 Wheeler */}
+                  <div className="bg-white p-3 rounded-lg border border-pink-200 shadow-sm">
+                    <label className="flex items-center gap-2 cursor-pointer hover:bg-pink-50 p-2 rounded transition">
                       <input
                         type="checkbox"
                         name="fourWheeler"
@@ -1157,9 +1435,8 @@ const RegistrationForm = () => {
                         }
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300 rounded"
                       />
-                      <span className="ml-3 text-gray-700 font-medium">
-                        {/* 🚗 Four Wheeler / 4 पहिया वाहन */}
-                        Four Wheeler / 4 पहिया वाहन
+                      <span className="text-gray-700 font-medium">
+                        4 Wheeler / 4 पहिया वाहन
                       </span>
                     </label>
                   </div>
@@ -1167,10 +1444,10 @@ const RegistrationForm = () => {
               </div>
 
               {/* Home Status Section */}
-              <div className="mt-6 p-4 shadow-inner flex-1">
-                <h4 className="font-bold text-lg mb-4 text-gray-800 flex items-center">
+              <div className="flex-1 p-4 rounded-xl shadow-md ">
+                <h4 className="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-lg p-2 text-white font-bold text-lg sm:text-xl flex items-center gap-2 mb-4">
                   <svg
-                    className="w-5 h-5 mr-2 text-pink-600"
+                    className="w-5 h-5 text-white"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -1178,9 +1455,11 @@ const RegistrationForm = () => {
                   </svg>
                   Home Status / मकान विवरण
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white p-3 rounded-lg border border-pink-200">
-                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Rented */}
+                  <div className="bg-white p-3 rounded-lg border border-pink-200 shadow-sm">
+                    <label className="flex items-center gap-2 cursor-pointer hover:bg-pink-50 p-2 rounded transition">
                       <input
                         type="radio"
                         name="homeStatus"
@@ -1194,15 +1473,15 @@ const RegistrationForm = () => {
                         }
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
                       />
-                      <span className="ml-3 text-gray-700 font-medium">
-                        {/* 🏠 Rented / किराये का */}
-                          Rented / किराये का
+                      <span className="text-gray-700 font-medium">
+                        Rented / किराये का
                       </span>
                     </label>
                   </div>
 
-                  <div className="bg-white p-3 rounded-lg border border-pink-200">
-                    <label className="flex items-center cursor-pointer hover:bg-pink-50 p-2 rounded transition-colors">
+                  {/* Self Owned */}
+                  <div className="bg-white p-3 rounded-lg border border-pink-200 shadow-sm">
+                    <label className="flex items-center gap-2 cursor-pointer hover:bg-pink-50 p-2 rounded transition">
                       <input
                         type="radio"
                         name="homeStatus"
@@ -1216,8 +1495,7 @@ const RegistrationForm = () => {
                         }
                         className="h-4 w-4 text-pink-600 focus:ring-pink-500 border-gray-300"
                       />
-                      <span className="ml-3 text-gray-700 font-medium">
-                        {/* 🏡 Self Owned / स्वयं का */}
+                      <span className="text-gray-700 font-medium">
                         Self Owned / स्वयं का
                       </span>
                     </label>
@@ -1299,16 +1577,20 @@ const RegistrationForm = () => {
           <div>
             <h3
               className={` w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 rounded-t-xl p-2 text-white font-bold sm:text-xl text-lg`}
-            ><span className="sm:text-lg text-xs font-bold">
-              <Heart
-                className="inline-block mr-2 text-white font-bold"
-                size={24}
-              />{" "}
-             Photo/ फोटो</span>
+            >
+              <span className="sm:text-lg text-xs font-bold">
+                <Heart
+                  className="inline-block mr-2 text-white font-bold"
+                  size={24}
+                />{" "}
+                Photo/ फोटो
+              </span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4  p-2  shadow-2xl ">
               <div>
-                <label className={labelClasses}>Upload  Profile  Photo</label>
+                <label className={labelClasses}>
+                  Upload Profile Photo <span className="text-red-500"> *</span>
+                </label>
                 <input
                   type="file"
                   name="image"
@@ -1336,29 +1618,33 @@ const RegistrationForm = () => {
                 )}
               </div>
 
-              <div>
-                <label className={labelClasses}>Upload Personal Photo</label>
+              <div className="mt-6">
+                <label className={labelClasses}>Upload Personal Image</label>
                 <input
                   type="file"
-                  name="image"
+                  name="personalimage"
                   accept="image/*"
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer"
+                  className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 cursor-pointer"
                 />
                 <p className="text-xs text-white mt-1 font bold">
                   Accepted formats: JPG, PNG, GIF (Max 5MB)
                 </p>
-                {form.image && (
+
+                {form.personalimage && (
                   <p className="text-sm text-gray-600 mt-2">
                     Selected:{" "}
-                    <span className="font-medium">{form.image.name}</span>
+                    <span className="font-medium">
+                      {form.personalimage.name}
+                    </span>
                   </p>
                 )}
-                {imagePreview && ( // Display image preview if available
+
+                {personalImagePreview && (
                   <div className="mt-4 flex justify-center">
                     <img
-                      src={imagePreview}
-                      alt="Image Preview"
+                      src={personalImagePreview}
+                      alt="Personal Preview"
                       className="max-w-xs max-h-48 rounded-lg shadow-md border border-gray-200 object-cover"
                     />
                   </div>
@@ -1389,9 +1675,8 @@ const RegistrationForm = () => {
               </span>
             </div>
           )}
-          <TermsAndConditionsPage/>
-          
-          
+          <TermsAndConditionsPage />
+
           <div className="flex justify-center pt-6">
             <button
               type="submit"

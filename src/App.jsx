@@ -24,6 +24,9 @@ import LoginForm from "./components/Registration/LoginForm";
 import VivahRegistrationForm from "./components/Registration/VivahRegistrationForm";
 import GetAllMembers from "./components/Admin/GetAllMembers";
 import RegistrationForm from "./components/Registration/RegistrationForm";
+import TermsAndConditionsPage from "./components/LandingPage/TermsAndConditionsPage";
+
+import LocationForm from "./components/Registration/LocationForm";
 
 function App() {
   return (
@@ -55,7 +58,9 @@ function App() {
         <Route path="/vender" element={<WeddingVendorDirectory/>} />
         <Route path="/vivahregistration" element={<VivahRegistrationForm/>} />
         <Route path="/registration" element={<RegistrationForm/>} />
-        
+        <Route path="/termsandcondition" element={<TermsAndConditionsPage/>} />
+        <Route path="/locationForm" element={<LocationForm/>} />
+    
         <Route path="/login" element={<LoginForm/>} />
         <Route path="/allmembers" element={<GetAllMembers/>} />
      

@@ -337,26 +337,26 @@ export const communities = [
     englishDesc: 'The Mahour Vaishya community is engaged in trading activities, mainly residing in Uttar Pradesh and Madhya Pradesh.',
     gotra: ['माहौर', 'वैश्य', 'गुप्ता', 'शर्मा', 'अग्रवाल', 'वर्मा', 'जैन', 'सेठ', 'भगत', 'कुमार', 'सिंह', 'चौधरी'] // No specific new gotra provided, so kept the existing one from the first data set.
   },
-{
-  id: 25,
-  name: 'ब्राह्मण समाज',
-  english: 'Brahmin Samaj',
-  icon: '📿',
-  gradient: 'from-yellow-500 to-orange-600',
-  description: 'ब्राह्मण समाज भारत के प्राचीनतम समुदायों में से एक है, जो धार्मिक, वैदिक, और शैक्षिक कार्यों में अग्रणी रहा है।',
-  englishDesc: 'The Brahmin community is one of the oldest in India, known for its leadership in religious, Vedic, and educational activities.',
-  gotra: ['अन्य गोत्र', 'ब्राह्मण समाज-1']
-},
-{
-  id: 26,
-  name: 'स्वर्णकार सोनी समाज',
-  english: 'Swarnkar Soni Samaj',
-  icon: '💍',
-  gradient: 'from-yellow-400 to-red-600',
-  description: 'स्वर्णकार सोनी समाज आभूषण निर्माण और व्यापार में पारंपरिक रूप से संलग्न रहा है।',
-  englishDesc: 'The Swarnkar Soni community has traditionally been involved in jewelry making and trading.',
-  gotra: ['अन्य गोत्र', 'स्वर्णकार सोनी समाज-1']
-},
+// {
+//   id: 25,
+//   name: 'ब्राह्मण समाज',
+//   english: 'Brahmin Samaj',
+//   icon: '📿',
+//   gradient: 'from-yellow-500 to-orange-600',
+//   description: 'ब्राह्मण समाज भारत के प्राचीनतम समुदायों में से एक है, जो धार्मिक, वैदिक, और शैक्षिक कार्यों में अग्रणी रहा है।',
+//   englishDesc: 'The Brahmin community is one of the oldest in India, known for its leadership in religious, Vedic, and educational activities.',
+//   gotra: ['अन्य गोत्र', 'ब्राह्मण समाज-1']
+// },
+// {
+//   id: 26,
+//   name: 'स्वर्णकार सोनी समाज',
+//   english: 'Swarnkar Soni Samaj',
+//   icon: '💍',
+//   gradient: 'from-yellow-400 to-red-600',
+//   description: 'स्वर्णकार सोनी समाज आभूषण निर्माण और व्यापार में पारंपरिक रूप से संलग्न रहा है।',
+//   englishDesc: 'The Swarnkar Soni community has traditionally been involved in jewelry making and trading.',
+//   gotra: ['अन्य गोत्र', 'स्वर्णकार सोनी समाज-1']
+// },
 {
   id:27,
   name:'पद्मावती पोरवाल (जैन) ',
